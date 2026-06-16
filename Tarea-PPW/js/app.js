@@ -16,12 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const statSpd = document.getElementById("stat-spd");
 
     function obtenerDatosPokemon(pokemon) {
+        // Limpiar el texto ingresado quitando espacios
+        const nombreLimpio = pokemon.toLowerCase().trim();
+        if (!nombreLimpio) return;
+
         cardLoading.classList.remove("hidden");
         cardContent.classList.add("hidden");
         cardLoading.innerText = "Buscando en la base de datos...";
 
         const xhr = new XMLHttpRequest();
-        const url = `https://pokeapi.co{pokemon.toLowerCase().trim()}`;
+        // URL ultra-limpia sin barras finales conflictivas
+        const url = `https://pokeapi.co{nombreLimpio}`;
 
         xhr.open("GET", url, true);
 
@@ -32,11 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         const data = JSON.parse(xhr.responseText);
                         renderizarPokemon(data);
                     } catch (e) {
-                        console.error("Error al procesar JSON:", e);
-                        mostrarError("Error al procesar los datos del servidor.");
+                        mostrarError("Error al procesar los datos.");
                     }
                 } else {
-                    console.error("Error de estado HTTP:", xhr.status);
                     mostrarError("Pokémon no encontrado o error de red.");
                 }
             }
@@ -49,32 +52,48 @@ document.addEventListener("DOMContentLoaded", () => {
         cardLoading.classList.add("hidden");
         cardContent.classList.remove("hidden");
 
-        // Datos Básicos
+        // ID y Nombre
         pokeId.innerText = `#${pokemon.id.toString().padStart(3, '0')}`;
         pokeName.innerText = pokemon.name;
         
-        // Imagen
-        pokeImg.src = pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default;
+        // Imagen (Búsqueda segura del sprite)
+        let imagenUrl = "";
+        if (pokemon.sprites) {
+            if (pokemon.sprites.other && pokemon.sprites.other["official-artwork"]) {
+                imagenUrl = pokemon.sprites.other["official-artwork"].front_default;
+            }
+            if (!imagenUrl) {
+                imagenUrl = pokemon.sprites.front_default;
+            }
+        }
+        pokeImg.src = imagenUrl || "";
 
         // Tipos
         pokeTypes.innerHTML = "";
-        pokemon.types.forEach(item => {
-            const pill = document.createElement("span");
-            pill.classList.add("type-pill", `type-${item.type.name}`);
-            if(!pill.className.match(/type-(fire|water|grass|electric|normal|poison)/)) {
-                pill.classList.add("type-normal");
-            }
-            pill.innerText = item.type.name;
-            pokeTypes.appendChild(pill);
-        });
+        if (pokemon.types) {
+            pokemon.types.forEach(item => {
+                const pill = document.createElement("span");
+                pill.classList.add("type-pill", `type-${item.type.name}`);
+                if(!pill.className.match(/type-(fire|water|grass|electric|normal|poison)/)) {
+                    pill.classList.add("type-normal");
+                }
+                pill.innerText = item.type.name;
+                pokeTypes.appendChild(pill);
+            });
+        }
 
-        // Estadísticas Base
+        // Estadísticas Base de forma segura
         const maxStat = 150;
-        
-        let hp = pokemon.stats.find(s => s.stat.name === "hp").base_stat;
-        let atk = pokemon.stats.find(s => s.stat.name === "attack").base_stat;
-        let def = pokemon.stats.find(s => s.stat.name === "defense").base_stat;
-        let spd = pokemon.stats.find(s => s.stat.name === "speed").base_stat;
+        let hp = 50, atk = 50, def = 50, spd = 50;
+
+        if (pokemon.stats) {
+            pokemon.stats.forEach(s => {
+                if (s.stat.name === "hp") hp = s.base_stat;
+                if (s.stat.name === "attack") atk = s.base_stat;
+                if (s.stat.name === "defense") def = s.base_stat;
+                if (s.stat.name === "speed") spd = s.base_stat;
+            });
+        }
 
         statHp.style.width = `${Math.min((hp / maxStat) * 100, 100)}%`;
         statAtk.style.width = `${Math.min((atk / maxStat) * 100, 100)}%`;
@@ -89,13 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     botonBuscar.addEventListener("click", () => {
-        if (inputBusqueda.value !== "") obtenerDatosPokemon(inputBusqueda.value);
+        obtenerDatosPokemon(inputBusqueda.value);
     });
 
     inputBusqueda.addEventListener("keypress", (e) => {
-        if (e.key === "Enter" && inputBusqueda.value !== "") obtenerDatosPokemon(inputBusqueda.value);
+        if (e.key === "Enter") {
+            obtenerDatosPokemon(inputBusqueda.value);
+        }
     });
 
-    // Carga inicial por defecto
+    // Forzar carga inicial con un pokémon básico en minúsculas
     obtenerDatosPokemon("pikachu");
 });
