@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex Pro - Pokémon API</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header class="pokedex-header">
+        <div class="header-content">
+            <h1>Pokédex <span>Pro</span></h1>
+            <div class="search-container">
+                <input type="text" id="pokemon-input" placeholder="Nombre o ID de Pokémon...">
+                <button id="search-btn">Buscar</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pokedex-container">
+        <!-- Tarjeta de visualización principal -->
+        <section class="pokemon-card" id="pokemon-card">
+            <div class="card-loading" id="card-loading">Cargando Pokémon...</div>
+            
+            <div class="card-content hidden" id="card-content">
+                <div class="card-badge" id="poke-id">#001</div>
+                
+                <div class="image-container">
+                    <img src="" alt="Pokemon" id="poke-img">
+                </div>
+
+                <h2 class="poke-name" id="poke-name">Nombre</h2>
+                
+                <div class="poke-types" id="poke-types">
+                    <!-- Tipos dinámicos aquí -->
+                </div>
+
+                <div class="poke-stats">
+                    <h3>Estadísticas Base</h3>
+                    <div class="stat-group">
+                        <span>HP</span>
+                        <div class="bar-bg"><div class="bar-fill" id="stat-hp"></div></div>
+                    </div>
+                    <div class="stat-group">
+                        <span>Ataque</span>
+                        <div class="bar-bg"><div class="bar-fill" id="stat-atk"></div></div>
+                    </div>
+                    <div class="stat-group">
+                        <span>Defensa</span>
+                        <div class="bar-bg"><div class="bar-fill" id="stat-def"></div></div>
+                    </div>
+                    <div class="stat-group">
+                        <span>Velocidad</span>
+                        <div class="bar-bg"><div class="bar-fill" id="stat-spd"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

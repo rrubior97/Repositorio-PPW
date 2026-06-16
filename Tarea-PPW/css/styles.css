@@ -1,0 +1,216 @@
+/* Configuración General */
+:root {
+    --primary-red: #ef5350;
+    --dark-red: #b71c1c;
+    --bg-gray: #f4f6f9;
+    --text-dark: #2c3e50;
+    --white: #ffffff;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-gray);
+    color: var(--text-dark);
+}
+
+/* Encabezado / Buscador */
+.pokedex-header {
+    background-color: var(--primary-red);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border-bottom: 5px solid var(--dark-red);
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.pokedex-header h1 {
+    color: var(--white);
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pokedex-header h1 span {
+    font-weight: 300;
+    color: #ffeb3b;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+#pokemon-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+}
+
+#search-btn {
+    padding: 10px 20px;
+    background-color: var(--dark-red);
+    color: var(--white);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+#search-btn:hover {
+    background-color: #5f0909;
+}
+
+/* Contenedor Principal y Tarjeta */
+.pokedex-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pokemon-card {
+    background-color: var(--white);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #eceff1;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #78909c;
+}
+
+/* Imagen del Pokémon */
+.image-container {
+    background: radial-gradient(circle, #f5f5f5 0%, #e0e0e0 100%);
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid var(--bg-gray);
+}
+
+#poke-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+}
+
+.poke-name {
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* Tipos */
+.poke-types {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.type-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Colores de tipos dinámicos */
+.type-fire { background-color: #ff9800; }
+.type-water { background-color: #2196f3; }
+.type-grass { background-color: #4caf50; }
+.type-electric { background-color: #ffeb3b; color: #333; }
+.type-normal { background-color: #9e9e9e; }
+.type-poison { background-color: #9c27b0; }
+
+/* Estadísticas */
+.poke-stats h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--bg-gray);
+    padding-bottom: 5px;
+}
+
+.stat-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-group span {
+    width: 80px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.bar-bg {
+    flex-grow: 1;
+    background-color: #eceff1;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background-color: var(--primary-red);
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Utilidades de Estado */
+.card-loading {
+    text-align: center;
+    font-size: 18px;
+    color: #78909c;
+    padding: 40px 0;
+}
+
+.hidden {
+    display: none !important;
+}
