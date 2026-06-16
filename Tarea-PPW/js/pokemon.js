@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const xhr = new XMLHttpRequest();
         // URL ultra-limpia sin barras finales conflictivas
-        const url = `https://pokeapi.co{nombreLimpio}`;
+        const url = `https://pokeapi.co/api/v2/pokemon/ditto`;
 
         xhr.open("GET", url, true);
 
